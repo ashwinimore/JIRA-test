@@ -1,6 +1,8 @@
 package gov.healthit.oncprojectracking.jiraaqa;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
+
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +16,7 @@ public class MailFlushQueue {
     private String baseUrl;
     private String username = System.getProperty("username");
     private String password = System.getProperty("password");
+    private String filePath = System.getProperty("filePath");
 
     public MailFlushQueue() {
 
@@ -23,11 +26,14 @@ public class MailFlushQueue {
         if (password.equals(null)) {
             throw new IllegalArgumentException("Missing value for password!");
            }
+        
+            String tempDirectory = System.getProperty("user.dir") + File.separator + "chromedriver_win32";
+            filePath = tempDirectory;        
     }
 
     @Test
     public void systemMailQueue() throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\amore\\eclipse-workspace\\chromedriver_win32\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", (filePath + File.separator + "chromedriver.exe"));
         WebDriver driver = new ChromeDriver();
 
         baseUrl = "https://oncprojectracking.healthit.gov/";
